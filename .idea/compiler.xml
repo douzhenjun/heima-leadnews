@@ -17,6 +17,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="heima-leadnews-apis" target="1.8" />
+      <module name="heima-leadnews-article" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
