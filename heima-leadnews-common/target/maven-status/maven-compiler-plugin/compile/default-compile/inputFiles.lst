@@ -1,4 +1,5 @@
-D:\java_learning\heima-leadnews\heima-leadnews-common\src\main\java\com\heima\common\swagger\SwaggerConfiguration.java
-D:\java_learning\heima-leadnews\heima-leadnews-common\src\main\java\com\heima\common\exception\CustomException.java
-D:\java_learning\heima-leadnews\heima-leadnews-common\src\main\java\com\heima\common\swagger\Swagger2Configuration.java
-D:\java_learning\heima-leadnews\heima-leadnews-common\src\main\java\com\heima\common\exception\ExceptionCatch.java
+D:\java_work\heima-leadnews\heima-leadnews-common\src\main\java\com\heima\common\exception\ExceptionCatch.java
+D:\java_work\heima-leadnews\heima-leadnews-common\src\main\java\com\heima\common\swagger\SwaggerConfiguration.java
+D:\java_work\heima-leadnews\heima-leadnews-common\src\main\java\com\heima\common\swagger\Swagger2Configuration.java
+D:\java_work\heima-leadnews\heima-leadnews-common\src\main\java\com\heima\common\constants\ArticleConstants.java
+D:\java_work\heima-leadnews\heima-leadnews-common\src\main\java\com\heima\common\exception\CustomException.java
