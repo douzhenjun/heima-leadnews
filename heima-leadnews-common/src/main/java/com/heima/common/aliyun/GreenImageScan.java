@@ -65,15 +65,25 @@ public class GreenImageScan {
     
         List<ScanImageAdvanceRequest.ScanImageAdvanceRequestTask> taskList = new ArrayList<>();
         for (String imageUrl : imageList) {
-            URL url = new URL(imageUrl);
-            InputStream inputStream = url.openConnection().getInputStream();
-            ScanImageAdvanceRequest.ScanImageAdvanceRequestTask task = new ScanImageAdvanceRequest.ScanImageAdvanceRequestTask();
-            task.setDataId(UUID.randomUUID().toString());
-            task.setImageTimeMillisecond(DEFAULT_IMAGE_TIME_MILLISECOND);
-            task.setInterval(DEFAULT_INTERVAL);
-            task.setMaxFrames(DEFAULT_MAX_FRAMES);
-            task.setImageURLObject(inputStream);
-            taskList.add(task);
+            try {
+                URL url = new URL(imageUrl);
+                // 设置连接超时和读取超时
+                java.net.HttpURLConnection connection = (java.net.HttpURLConnection) url.openConnection();
+                connection.setConnectTimeout(5000);  // 连接超时 5 秒
+                connection.setReadTimeout(10000);     // 读取超时 10 秒
+                connection.setRequestMethod("GET");
+                InputStream inputStream = connection.getInputStream();
+                
+                ScanImageAdvanceRequest.ScanImageAdvanceRequestTask task = new ScanImageAdvanceRequest.ScanImageAdvanceRequestTask();
+                task.setDataId(UUID.randomUUID().toString());
+                task.setImageTimeMillisecond(DEFAULT_IMAGE_TIME_MILLISECOND);
+                task.setInterval(DEFAULT_INTERVAL);
+                task.setMaxFrames(DEFAULT_MAX_FRAMES);
+                task.setImageURLObject(inputStream);
+                taskList.add(task);
+            } catch (Exception e) {
+                throw new RuntimeException("下载图片失败：" + imageUrl + ", 错误：" + e.getMessage(), e);
+            }
         }
     
         com.aliyun.imageaudit20191230.models.ScanImageAdvanceRequest scanImageAdvanceRequest = new com.aliyun.imageaudit20191230.models.ScanImageAdvanceRequest()

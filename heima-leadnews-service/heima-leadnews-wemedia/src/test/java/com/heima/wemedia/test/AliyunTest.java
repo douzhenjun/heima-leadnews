@@ -37,7 +37,6 @@ public class AliyunTest {
     public void testScanText() throws Exception {
         Map<String, Object> map = greenTextScan.textScan("我爱祖国");
         System.out.println(JSON.toJSONString(map));
-
     }
 
     /**

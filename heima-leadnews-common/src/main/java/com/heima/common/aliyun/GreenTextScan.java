@@ -139,13 +139,13 @@ public class GreenTextScan {
         try {
             // 复制代码运行请自行打印API的返回值
             ScanTextResponse response = client.scanTextWithOptions(scanTextRequest, runtime);
+            System.out.println(com.aliyun.teautil.Common.toJSONString(TeaModel.buildMap(response)));
             return TeaModel.buildMap(response);
-//            System.out.println(com.aliyun.teautil.Common.toJSONString(TeaModel.buildMap(response)));
         } catch (TeaException error) {
             // 获取整体报错信息
-//            System.out.println(com.aliyun.teautil.Common.toJSONString(error));
-//            // 获取单个字段
-//            System.out.println(error.getCode());
+            System.out.println(com.aliyun.teautil.Common.toJSONString(error));
+            // 获取单个字段
+            System.out.println(error.getCode());
             resultMap.put("code", error.getCode());
             resultMap.put("message", error.getMessage());
             resultMap.put("data", null);

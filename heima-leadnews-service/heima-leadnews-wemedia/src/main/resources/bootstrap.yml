@@ -10,3 +10,29 @@ spring:
       config:
         server-addr: 192.168.88.130:8848
         file-extension: yml
+
+# Feign 和 Hystrix 配置
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000  # 连接超时 5 秒
+        readTimeout: 10000    # 读取超时 10 秒
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true
+  httpclient:
+    hc5:
+      enabled: false
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000  # Hystrix 超时 10 秒
+            interruptOnTimeout: false     # 超时后不中断线程
+  shareSecurityContext: true
