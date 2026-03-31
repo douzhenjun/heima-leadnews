@@ -1,10 +1,14 @@
 package com.heima.wemedia.service;
 
+import java.util.concurrent.CompletableFuture;
+
 public interface WmNewsAutoScanService {
 
     /**
      * 自媒体文章审核
-     * @param id  自媒体文章id
+     *
+     * @param id 自媒体文章id
+     * @return
      */
-    public void autoScanWmNews(Integer id);
+    public CompletableFuture<Void> autoScanWmNews(Integer id);
 }
