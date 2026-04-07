@@ -39,7 +39,7 @@ public class AuthorizeFilter implements Ordered, GlobalFilter {
             return response.setComplete();
         }
 
-        //5.判断token是否有效
+        //5.判断 token 是否有效
         try {
             Claims claimsBody = AppJwtUtil.getClaimsBody(token);
             //是否是过期
@@ -50,8 +50,15 @@ public class AuthorizeFilter implements Ordered, GlobalFilter {
             }
             //获取用户信息
             Object userId = claimsBody.get("id");
-
-            //存储header中
+                    
+            //如果需要刷新 token（result == 0），生成新 token 并返回给前端
+            if (result == 0) {
+                String newToken = AppJwtUtil.getToken((Long)userId);
+                response.getHeaders().add("refresh-token", newToken);
+                log.info("Token refreshed for userId: {}", userId);
+            }
+        
+            //存储 header 中
             ServerHttpRequest serverHttpRequest = request.mutate().headers(httpHeaders -> {
                 httpHeaders.add("userId", userId + "");
             }).build();

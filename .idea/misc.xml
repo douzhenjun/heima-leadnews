@@ -17,8 +17,10 @@
         <option value="$PROJECT_DIR$/heima-leadnews-test/es-init/pom.xml" />
         <option value="$PROJECT_DIR$/heima-leadnews-search/pom.xml" />
         <option value="$PROJECT_DIR$/heima-leadnews-service/heima-leadnews-search/pom.xml" />
+        <option value="$PROJECT_DIR$/heima-leadnews-test/mongo-demo/pom.xml" />
+        <option value="$PROJECT_DIR$/heima-leadnews-test/xxljob-demo/pom.xml" />
       </list>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="corretto-1.8" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
 </project>

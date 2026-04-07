@@ -25,7 +25,7 @@ public class AuthorizeFilter implements Ordered, GlobalFilter {
         ServerHttpResponse response = exchange.getResponse();
 
         //2.判断是否是登录
-        if(request.getURI().getPath().contains("/login")){
+        if (request.getURI().getPath().contains("/login")) {
             //放行
             return chain.filter(exchange);
         }
@@ -35,21 +35,38 @@ public class AuthorizeFilter implements Ordered, GlobalFilter {
         String token = request.getHeaders().getFirst("token");
 
         //4.判断token是否存在
-        if(StringUtils.isBlank(token)){
+        if (StringUtils.isBlank(token)) {
             response.setStatusCode(HttpStatus.UNAUTHORIZED);
             return response.setComplete();
         }
 
-        //5.判断token是否有效
+        //5.判断 token 是否有效
         try {
             Claims claimsBody = AppJwtUtil.getClaimsBody(token);
             //是否是过期
             int result = AppJwtUtil.verifyToken(claimsBody);
-            if(result == 1 || result  == 2){
+            if (result == 1 || result == 2) {
                 response.setStatusCode(HttpStatus.UNAUTHORIZED);
                 return response.setComplete();
             }
-        }catch (Exception e){
+                    
+            //获取用户信息
+            Object userId = claimsBody.get("id");
+                    
+            //如果需要刷新 token（result == 0），生成新 token 并返回给前端
+            if (result == 0) {
+                String newToken = AppJwtUtil.getToken((Long)userId);
+                response.getHeaders().add("refresh-token", newToken);
+                log.info("Token refreshed for userId: {}", userId);
+            }
+                    
+            //存储 header 中
+            ServerHttpRequest serverHttpRequest = request.mutate().headers(httpHeaders -> {
+                httpHeaders.add("userId", userId + "");
+            }).build();
+            //重置请求
+            exchange.mutate().request(serverHttpRequest);
+        } catch (Exception e) {
             e.printStackTrace();
             response.setStatusCode(HttpStatus.UNAUTHORIZED);
             return response.setComplete();
@@ -61,6 +78,7 @@ public class AuthorizeFilter implements Ordered, GlobalFilter {
 
     /**
      * 优先级设置  值越小  优先级越高
+     *
      * @return
      */
     @Override
